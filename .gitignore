@@ -17,6 +17,14 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Eclipse file to be ignored
+.classpath
+
+# folder structures to be ignored
+/bin/**
+/test-output/**
+/screenshots/screenshot*.png
+
 # =========================
 # Operating System Files
 # =========================
@@ -41,3 +49,5 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+
