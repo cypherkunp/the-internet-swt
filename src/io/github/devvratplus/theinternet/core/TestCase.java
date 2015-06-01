@@ -2,6 +2,7 @@ package io.github.devvratplus.theinternet.core;
 
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -82,4 +83,10 @@ public class TestCase extends TestBase {
 	public WebDriver selenium(){
 		return driver;
 	}
+	
+	public void clickOnLink(String linkText){
+		
+		selenium().findElement(By.linkText(linkText)).click();
+	}
+	
 }

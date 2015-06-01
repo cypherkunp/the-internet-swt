@@ -25,7 +25,7 @@ public class HandlingCheckboxes extends TestCase{
 	@Test
 	public void checkTheUncheckedboxTest() {
 
-		selenium().findElement(By.xpath("//*[@id='content']/ul/li[5]/a")).click();
+		clickOnLink("Checkboxes");
 
 		// this check box is unchecked by default
 		WebElement checkbox1 = selenium().findElement(
