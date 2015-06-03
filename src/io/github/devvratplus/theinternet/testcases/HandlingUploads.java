@@ -28,6 +28,7 @@ public class HandlingUploads extends TestCase {
 				+ "\\screenshots\\";
 		String fileName = "ScreenshotsAreSavedHereByDefault.jpg";
 
+		// Uploading the file
 		selenium().findElement(By.xpath("//input[@id='file-upload']"))
 				.sendKeys(fileLocation + fileName);
 
