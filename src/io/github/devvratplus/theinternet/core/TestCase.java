@@ -71,8 +71,22 @@ public class TestCase extends TestBase {
 		return driver;					
 	}
 	
+	/**
+	 * 
+	 * Initializes <b>Selenium WebDriver</b> object using the values specified in the
+	 * selenium.properties file
+	 */
 	public void launchSelenium(){
 		driver = initializeSelenium();
+		driver.get(getSeleniumProperty("url"));
+	}
+	
+	/**
+	 * Initializes the driver with the FirefoxDriver instance with the
+	 * preferences set for the firefox profile
+	 */
+	public void launchSelenium(FirefoxProfile firefoxProfile){
+		driver = new FirefoxDriver(firefoxProfile);
 		driver.get(getSeleniumProperty("url"));
 	}
 	
