@@ -5,7 +5,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
-
+/**
+ * 
+ * 
+ * @author Devvrat Shukla
+ *
+ */
 public class TestBase {
 	
 	// Property file locations
@@ -21,6 +26,8 @@ public class TestBase {
 			.getProperty("user.dir") + "\\drivers\\chromedriver_linux32";
 	protected static final String CHROMEDRIVER_LINUX64 = System
 			.getProperty("user.dir") + "\\drivers\\chromedriver_linux64";
+	protected static final String PHANTOMJSDRIVER = System
+			.getProperty("user.dir") + "\\drivers\\phantomjs.exe";
 
 	private static Properties seleniumProperty = null;
 
@@ -45,7 +52,7 @@ public class TestBase {
 		}
 	}
 
-	public String getSeleniumProperty(String propertyKey) {
+	protected String getSeleniumProperty(String propertyKey) {
 
 		return seleniumProperty.getProperty(propertyKey);
 	}
