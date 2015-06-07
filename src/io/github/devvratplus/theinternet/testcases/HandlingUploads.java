@@ -13,7 +13,7 @@ public class HandlingUploads extends TestCase {
 	@BeforeMethod
 	public void setUp() {
 		launchSelenium();
-		
+
 	}
 
 	@AfterMethod
@@ -23,19 +23,20 @@ public class HandlingUploads extends TestCase {
 
 	@Test
 	public void handlingUploadsTest() {
-		clickOnLink("File Upload");
+		findElementByLinkTest("File Upload").click();
+
 		String fileLocation = System.getProperty("user.dir")
 				+ "\\screenshots\\";
 		String fileName = "ScreenshotsAreSavedHereByDefault.jpg";
 
 		// Uploading the file
-		selenium().findElement(By.xpath("//input[@id='file-upload']"))
-				.sendKeys(fileLocation + fileName);
+		findElementByXpath("//input[@id='file-upload']").sendKeys(
+				fileLocation + fileName);
 
-		selenium().findElement(By.xpath("//input[@id='file-submit']")).click();
+		findElementByXpath("//input[@id='file-submit']").click();
 
-		String uploadedFileName = selenium().findElement(
-				By.xpath("//*[@id='uploaded-files']")).getText();
+		String uploadedFileName = findElementByXpath(
+				"//*[@id='uploaded-files']").getText();
 
 		Assert.assertEquals(fileName, uploadedFileName, "Upload Failed : "
 				+ uploadedFileName);
