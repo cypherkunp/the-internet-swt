@@ -30,6 +30,10 @@ public class TestBase {
 			.getProperty("user.dir") + "\\drivers\\phantomjs.exe";
 
 	private static Properties seleniumProperty = null;
+	
+	// Configured folder locations
+	protected static final String SAVE_SCREENSHOTS_AT = System
+			.getProperty("user.dir") + "\\screenshots\\";
 
 	public TestBase(){
 		loadSeleniumProperty();

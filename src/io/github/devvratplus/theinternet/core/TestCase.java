@@ -1,9 +1,14 @@
 package io.github.devvratplus.theinternet.core;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchFrameException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -12,6 +17,9 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.BeforeMethod;
+import org.testng.asserts.SoftAssert;
 
 /**
  * TestCase class that every test must extend.
@@ -22,7 +30,13 @@ import org.openqa.selenium.safari.SafariDriver;
 public class TestCase extends TestBase {
 
 	private WebDriver driver = null;
-
+	private SoftAssert softAssert = null;
+	
+	@BeforeMethod
+	public void initializeSoftAssert(){
+		softAssert = new SoftAssert();
+	}
+	
 	private WebDriver initializeSelenium() {
 
 		// Setting the operating system specific system-properties
@@ -141,7 +155,7 @@ public class TestCase extends TestBase {
 	/**
 	 * Finds the WebElement via linkText
 	 * 
-	 * @param linkText
+	 * @param linkText 
 	 * @return WebElement
 	 */
 	protected WebElement findElementByLinkTest(String linkText) {
@@ -164,7 +178,7 @@ public class TestCase extends TestBase {
 	 * Finds the WebElement via className
 	 * 
 	 * @param className
-	 * @return
+	 * @return WebElement
 	 */
 	protected WebElement findElementByClassName(String className) {
 
@@ -175,7 +189,7 @@ public class TestCase extends TestBase {
 	 * Finds the WebElement via name attribute
 	 * 
 	 * @param name
-	 * @return
+	 * @return WebElement
 	 */
 	protected WebElement findElementByName(String name) {
 
@@ -186,7 +200,7 @@ public class TestCase extends TestBase {
 	 *  Finds the WebElement via xpath expression
 	 *  
 	 * @param xpathExpression
-	 * @return
+	 * @return WebElement
 	 */
 	protected WebElement findElementByXpath(String xpathExpression) {
 
@@ -197,23 +211,51 @@ public class TestCase extends TestBase {
 	 * Finds the WebElement via cssSelector
 	 * 
 	 * @param selector
-	 * @return
+	 * @return WebElement
 	 */
 	protected WebElement findElementByCSSSelector(String selector) {
 
 		return selenium().findElement(By.cssSelector(selector));
 	}
-	
+
 	/**
-     * Select a frame by its name or ID. Frames located by matching name attributes are always given
-     * precedence over those matched by ID.
-     * 
-     * @param nameOrId the name of the frame window, the id of the &lt;frame&gt; or &lt;iframe&gt;
-     *        element, or the (zero-based) index
-     * @return This driver focused on the given frame
-     * @throws NoSuchFrameException If the frame cannot be found
-     */
-	protected WebDriver switchToFrameWithNameORId(String nameOrId){
+	 * Select a frame by its name or ID. Frames located by matching name
+	 * attributes are always given precedence over those matched by ID.
+	 * 
+	 * @param nameOrId
+	 *            the name of the frame window, the id of the &lt;frame&gt; or
+	 *            &lt;iframe&gt; element, or the (zero-based) index
+	 * @return This driver focused on the given frame
+	 * @throws NoSuchFrameException
+	 *             If the frame cannot be found
+	 */
+	protected WebDriver switchToFrameWithNameORId(String nameOrId) {
 		return selenium().switchTo().frame(nameOrId);
+	}
+
+	/**
+	 * Takes screenshot and saves it inside screenshots folder
+	 * 
+	 * @param prefix
+	 *            Screenshot .png will be prefixed with this string
+	 */
+	protected void takeSnapshot(String prefix) {
+		File snap = ((TakesScreenshot) selenium())
+				.getScreenshotAs(OutputType.FILE);
+		try {
+			FileUtils.copyFile(snap, new File(SAVE_SCREENSHOTS_AT + prefix
+					+ "_screenshot_" + TestUtils.appendDateAndTime() + ".png"));
+		} catch (IOException e) {
+			System.out.println("Unabel to save the screenshot.");
+		}
+	}
+
+	/**
+	 * Returns object reference to the SoftAssert object
+	 * 
+	 * @return SoftAssert
+	 */
+	protected SoftAssert checkPoint() {
+		return softAssert;
 	}
 }

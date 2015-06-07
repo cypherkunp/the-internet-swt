@@ -25,11 +25,10 @@ public class HandlingCheckboxes extends TestCase{
 	@Test
 	public void checkTheUncheckedboxTest() {
 
-		clickOnLink("Checkboxes");
+		findElementByLinkTest("Checkboxes").click();;
 
 		// this check box is unchecked by default
-		WebElement checkbox1 = selenium().findElement(
-				By.xpath("//*[@id='checkboxes']/input[1]"));
+		WebElement checkbox1 = findElementByXpath("//*[@id='checkboxes']/input[1]");
 
 		// verifying that it's unchecked
 		if (checkbox1.getAttribute("checked") == null) {
@@ -45,12 +44,10 @@ public class HandlingCheckboxes extends TestCase{
 	@Test
 	public void uncheckThecheckedboxTest(){
 		
-		selenium().findElement(By.xpath("//*[@id='content']/ul/li[5]/a"))
-				.click();
+		findElementByLinkTest("Checkboxes").click();
 
 		// this check box is unchecked by default
-		WebElement checkbox2 = selenium().findElement(
-				By.xpath("//*[@id='checkboxes']/input[2]"));
+		WebElement checkbox2 = findElementByXpath("//*[@id='checkboxes']/input[2]");
 
 		// verifying that it's checked
 		if (checkbox2.getAttribute("checked") == "") {
@@ -65,13 +62,10 @@ public class HandlingCheckboxes extends TestCase{
 	
 	@Test
 	public void verifyLablesofTheCheckboxes(){
-		selenium().findElement(By.xpath("//*[@id='content']/ul/li[5]/a"))
-		.click();
+		findElementByLinkTest("Checkboxes").click();
 		
-		WebElement checkbox1 = selenium().findElement(
-				By.xpath("//*[@id='checkboxes']/input[1]"));
-		WebElement checkbox2 = selenium().findElement(
-				By.xpath("//*[@id='checkboxes']/input[2]"));
+		WebElement checkbox1 = findElementByXpath("//*[@id='checkboxes']/input[1]");
+		WebElement checkbox2 = findElementByXpath("//*[@id='checkboxes']/input[2]");
 		
 		String checkBoxLabel1 = checkbox1.getText();
 		String checkBoxLabel2 = checkbox2.getText();

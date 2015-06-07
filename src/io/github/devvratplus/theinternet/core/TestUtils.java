@@ -9,20 +9,21 @@ import java.util.Calendar;
 public class TestUtils {
 	
 	/**
-	 * Returns a <code>String</code> with Date and Time
-	 * formatted as <i>yyyyMMddHHmmss</i>
-	 *  
+	 * Returns a <code>String</code> with Date and Time formatted as
+	 * <i>yyyyMMddHHmmss</i>
+	 * 
 	 * @return String
 	 */
-	public static String appendDateAndTime(){
+	public static String appendDateAndTime() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		Calendar cal = Calendar.getInstance();
-		
+
 		return dateFormat.format(cal.getTime());
 	}
-	
+
 	/**
 	 * Creates a temporary directory.
+	 * 
 	 * @return File
 	 * @throws IOException
 	 */
@@ -43,5 +44,4 @@ public class TestUtils {
 
 		return (temp);
 	}
-
 }
