@@ -25,6 +25,13 @@ $RECYCLE.BIN/
 /test-output/**
 /screenshots/screenshot*.png
 
+# ignoring the drivers
+/drivers/chromedriver*
+/drivers/IEDriver*
+/drivers/opera*
+/drivers/phantomjs*
+/drivers/*.txt
+
 # =========================
 # Operating System Files
 # =========================
