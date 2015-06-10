@@ -11,7 +11,7 @@ import java.util.Properties;
  * @author Devvrat Shukla
  *
  */
-public class TestBase {
+public abstract class TestBase {
 	
 	// Property file locations
 	protected static final String SELENIUM_PROPERTY_FILE = System

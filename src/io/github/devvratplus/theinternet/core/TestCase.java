@@ -27,16 +27,16 @@ import org.testng.asserts.SoftAssert;
  * @author Devvrat Shukla
  * 
  */
-public class TestCase extends TestBase {
+public abstract class TestCase extends TestBase {
 
 	private WebDriver driver = null;
 	private SoftAssert softAssert = null;
-	
+
 	@BeforeMethod
-	public void initializeSoftAssert(){
+	public void initializeSoftAssert() {
 		softAssert = new SoftAssert();
 	}
-	
+
 	private WebDriver initializeSelenium() {
 
 		// Setting the operating system specific system-properties
@@ -162,6 +162,17 @@ public class TestCase extends TestBase {
 
 		return selenium().findElement(By.linkText(linkText));
 	}
+	
+	/**
+	 * Finds the WebElement via partial linkText
+	 * 
+	 * @param linkText 
+	 * @return WebElement
+	 */
+	protected WebElement findElementByPartialLinkText(String linkText) {
+
+		return selenium().findElement(By.partialLinkText(linkText));
+	}
 
 	/**
 	 * Finds the WebElement via id attribute
@@ -231,6 +242,26 @@ public class TestCase extends TestBase {
 	 */
 	protected WebDriver switchToFrameWithNameORId(String nameOrId) {
 		return selenium().switchTo().frame(nameOrId);
+	}
+	
+	/**
+	 * Change focus to the parent context. If the current context is the top
+	 * level browsing context, the context remains unchanged.
+	 *
+	 * @return This driver focused on the parent frame
+	 */
+	protected WebDriver switchToParentFrame() {
+		return selenium().switchTo().parentFrame();
+	}
+	
+	/**
+	 * Selects either the first frame on the page, or the main document when a
+	 * page contains iframes.
+	 *
+	 * @return This driver focused on the top window/first frame.
+	 */
+	protected WebDriver switchToDefaultContent() {
+		return selenium().switchTo().defaultContent();
 	}
 
 	/**

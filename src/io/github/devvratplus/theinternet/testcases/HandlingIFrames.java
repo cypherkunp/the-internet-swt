@@ -70,26 +70,24 @@ public class HandlingIFrames extends TestCase{
 		System.out.println("Switched to the " + leftFrametext + " frame");
 		checkPoint().assertEquals(leftFrametext, "LEFT");
 		
-		//switch to the main page
-		selenium().switchTo().defaultContent();
+		//switch to the parent Frame frame-top
+		switchToParentFrame();
 		
-		switchToFrameWithNameORId("frame-top");
 		switchToFrameWithNameORId("frame-middle");
 		String middleFrametext = findElementByXpath("html/body").getText();
 		System.out.println("Switched to the " + middleFrametext + " frame");
 		checkPoint().assertEquals(middleFrametext, "MIDDLE");
 
-		//switch to the main page
-		selenium().switchTo().defaultContent();
+		//switch to the parent Frame frame-top
+		switchToParentFrame();
 		
-		switchToFrameWithNameORId("frame-top");
 		switchToFrameWithNameORId("frame-right");
 		String rightFrametext = findElementByXpath("html/body").getText();
 		System.out.println("Switched to the " + rightFrametext + " frame");
 		checkPoint().assertEquals(rightFrametext, "RIGHT");
 
 		//switch to the main page
-		selenium().switchTo().defaultContent();
+		switchToDefaultContent();
 		
 		// Switch to down frame
 		switchToFrameWithNameORId("frame-bottom");
