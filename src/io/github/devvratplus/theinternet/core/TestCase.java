@@ -2,15 +2,18 @@ package io.github.devvratplus.theinternet.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchFrameException;
+import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WebDriver.Options;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -118,6 +121,20 @@ public abstract class TestCase extends TestBase {
 	protected void launchSelenium() {
 		driver = initializeSelenium();
 		driver.get(getSeleniumProperty("url"));
+	}
+	
+	/**
+	 * 
+	 * Initializes <b>Selenium WebDriver</b> object using the values specified
+	 * in the selenium.properties file and starts the browser using the specified
+	 * url.
+	 * 
+	 * @param url The url to the test page
+	 *            
+	 */
+	protected void launchSelenium(String url) {
+		driver = initializeSelenium();
+		driver.get(url);
 	}
 
 	/**
@@ -264,6 +281,43 @@ public abstract class TestCase extends TestBase {
 		return selenium().switchTo().defaultContent();
 	}
 
+	/**
+	 * The title of the current page.
+	 *
+	 * @return The title of the current page, with leading and trailing
+	 *         whitespace stripped, or null if one is not already set
+	 */
+	protected String getTitle() {
+		return selenium().getTitle();
+	}
+
+	/**
+	 * Return a set of window handles which can be used to iterate over all open
+	 * windows of this WebDriver instance.
+	 *
+	 * @return A set of window handles which can be used to iterate over all
+	 *         open windows.
+	 */
+	protected Set<String> getWindowHandles() {
+		return selenium().getWindowHandles();
+
+	}
+	  
+	/**
+	 * Switch the focus of future commands for this driver to the window with
+	 * the given name/handle.
+	 *
+	 * @param nameOrHandle
+	 *            The name of the window or the handle as returned by
+	 *            {@link WebDriver#getWindowHandle()}
+	 * @return This driver focused on the given window
+	 * @throws NoSuchWindowException
+	 *             If the window cannot be found
+	 */
+	protected WebDriver switchToWindow(String nameOrHandle) {
+		return selenium().switchTo().window(nameOrHandle);
+	}
+	
 	/**
 	 * Takes screenshot and saves it inside screenshots folder
 	 * 
