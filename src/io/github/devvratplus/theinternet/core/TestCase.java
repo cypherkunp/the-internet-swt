@@ -7,20 +7,21 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.NoSuchFrameException;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.WebDriver.Options;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.safari.SafariDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeMethod;
 import org.testng.asserts.SoftAssert;
 
@@ -151,6 +152,10 @@ public abstract class TestCase extends TestBase {
 	 */
 	protected void quitSelenium() {
 		driver.quit();
+	}
+	
+	protected Actions doAction(){
+		return new Actions(driver);
 	}
 	
 	/**
@@ -289,6 +294,59 @@ public abstract class TestCase extends TestBase {
 	 */
 	protected String getTitle() {
 		return selenium().getTitle();
+	}
+	
+	/**
+     * Refresh the current page
+     */
+	protected void reloadPage(){
+		selenium().navigate().refresh();
+	}
+	
+	/**
+	 * Get a string representing the current URL that the browser is looking at.
+	 *
+	 * @return The URL of the page currently loaded in the browser
+	 */
+	protected String getCurrentURL() {
+		return selenium().getCurrentUrl();
+	}
+	
+	/**
+	 * Checks whether an element is displayed on the webpage or not
+	 * 
+	 * @param locator
+	 * @return true if the element is found on the webpage
+	 */
+	protected boolean isWebElementPresent(By locator) {
+		try {
+			selenium().findElement(locator).isDisplayed();
+		} catch (NoSuchElementException e) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Reloads a page until an element is present
+	 * 
+	 * @param locator
+	 * @param reloadNumberOfTime
+	 *            Reloads the web page specified number of times
+	 * @return true if the element was visible after page reload
+	 */
+	protected boolean reloadPageUntilAnElementIsVisibleOnThePage(By locator,
+			int reloadNumberOfTime) {
+		int counter = 0;
+		while (!isWebElementPresent(locator)) {
+			reloadPage();
+			System.out.println("Reloading page, element not found");
+			counter++;
+			if (counter > reloadNumberOfTime) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
