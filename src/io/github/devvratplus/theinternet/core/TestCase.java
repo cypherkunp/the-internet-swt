@@ -1,12 +1,16 @@
 package io.github.devvratplus.theinternet.core;
 
+import static org.testng.Assert.fail;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.NoSuchFrameException;
 import org.openqa.selenium.NoSuchWindowException;
@@ -18,13 +22,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.asserts.SoftAssert;
-
 /**
  * TestCase class that every test must extend.
  * 
@@ -35,6 +38,15 @@ public abstract class TestCase extends TestBase {
 
 	private WebDriver driver = null;
 	private SoftAssert softAssert = null;
+	
+	@BeforeClass
+	public void validateTestSetup() {
+		if (!HttpResponseCodes
+				.checkForResponseCode200(getSeleniumProperty("url"))) {
+
+			fail("Webpage is not accessible");
+		}
+	}
 
 	@BeforeMethod
 	public void initializeSoftAssert() {
@@ -284,6 +296,18 @@ public abstract class TestCase extends TestBase {
 	 */
 	protected WebDriver switchToDefaultContent() {
 		return selenium().switchTo().defaultContent();
+	}
+	
+	/**
+	 * Switches to the currently active modal dialog for this particular driver
+	 * instance.
+	 *
+	 * @return A handle to the dialog.
+	 * @throws NoAlertPresentException
+	 *             If the dialog cannot be found
+	 */
+	protected Alert switchToAlert() {
+		return selenium().switchTo().alert();
 	}
 
 	/**
